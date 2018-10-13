@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sudo docker build $(dirname $0) -t presenter-as-a-service:$(date +"%Y-%m-%d_%H-%M-%S") -t presenter-as-a-service
