@@ -8,5 +8,10 @@
     "base_image": "dan2",
     "distortion": "44:22:330:189:329:438:25:404",
     "brightness": 0
+  },
+  "doug": {
+    "base_image": "doug",
+    "distortion": "324:277:756:51:770:485:311:545",
+    "brightness": 0
   }
 }
