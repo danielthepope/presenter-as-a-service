@@ -3,7 +3,7 @@ const request = require('request');
 const people = require('./people');
 const app = express();
 
-app.use(express.static('./public'));
+app.get('/', (req, res) => res.redirect('https://picsoung.typeform.com/to/Oo2bus'));
 
 app.get('/:who', (req, res) => {
   const slide = req.query['slide'];
