@@ -8,6 +8,7 @@ app.get('/', (req, res) => res.redirect('https://picsoung.typeform.com/to/Oo2bus
 app.get('/:who', (req, res) => {
   const slide = req.query['slide'] === '_____' ? '' : req.query['slide'];
   const text = req.query['text'] === '_____' ? '' : req.query['text'];
+  const textColour = req.query['textColour'];
   const person = req.params.who.toLowerCase();
 
   if (!people[person]) {
@@ -22,12 +23,13 @@ app.get('/:who', (req, res) => {
   const distortion = people[person].distortion;
   const base_image = people[person].base_image;
 
-  const textTemplate = text ? `w_800,h_600,c_fit,l_text:Arial_80:${text}/` : '';
+  const textColourValue = textColour ? `,co_rgb:${textColour}` : '';
+  const textTemplate = text ? `w_800,h_600,c_fit,l_text:Arial_80:${text}${textColourValue}/` : '';
 
   const method = slide ? 'fetch' : 'upload';
   const slide_content = slide || 'white.jpg';
 
-  const url = `https://res.cloudinary.com/dpope/image/${method}/${textTemplate}e_brightness_hsb:${brightness}/c_fit,e_distort:${distortion},w_500/g_north_west,e_screen,l_${base_image}/w_500/${slide_content}`;
+  const url = `https://res.cloudinary.com/dpope/image/${method}/${textTemplate}e_brightness_hsb:${brightness}/c_fit,e_distort:${distortion},w_700/g_north_west,e_screen,l_${base_image}/w_700/${slide_content}`;
   console.log(url);
   request({
     url: url,
