@@ -6,8 +6,8 @@ const app = express();
 app.get('/', (req, res) => res.redirect('https://picsoung.typeform.com/to/Oo2bus'));
 
 app.get('/:who', (req, res) => {
-  const slide = req.query['slide'];
-  const text = req.query['text'];
+  const slide = req.query['slide'] === '____' ? '' : req.query['slide'];
+  const text = req.query['text'] === '____' ? '' : req.query['text'];
   const person = req.params.who.toLowerCase();
 
   if (!people[person]) {
