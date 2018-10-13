@@ -18,17 +18,16 @@ app.get('/:who', (req, res) => {
     return res.status(400).send('We require either ?slide with an image URL or ?text with a message');
   }
 
-  if (text) {
-    return res.status(400).send('Text not yet supported.');
-  }
-
   const brightness = people[person].brightness;
   const distortion = people[person].distortion;
   const base_image = people[person].base_image;
 
-  console.log({brightness, distortion, base_image})
+  const textTemplate = text ? `w_800,h_600,c_fit,l_text:Arial_80:${text}/` : '';
 
-  const url = `https://res.cloudinary.com/dpope/image/fetch/e_brightness_hsb:${brightness}/c_fit,e_distort:${distortion},w_500/g_north_west,e_screen,l_${base_image}/w_500/${slide}`;
+  const method = slide ? 'fetch' : 'upload';
+  const slide_content = slide || 'white.jpg';
+
+  const url = `https://res.cloudinary.com/dpope/image/${method}/${textTemplate}e_brightness_hsb:${brightness}/c_fit,e_distort:${distortion},w_500/g_north_west,e_screen,l_${base_image}/w_500/${slide_content}`;
   console.log(url);
   request({
     url: url,
