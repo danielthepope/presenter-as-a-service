@@ -1,7 +1,18 @@
+require('dotenv').config();
+
 const express = require('express');
+const Nexmo = require('nexmo');
 const request = require('request');
 const people = require('./people');
+
+console.log(`Sending to ${process.env.NEXMO_SEND_TO}`);
+
 const app = express();
+const nexmo = (process.env.NEXMO_KEY && process.env.NEXMO_SECRET) ? new Nexmo({
+  apiKey: process.env.NEXMO_KEY,
+  apiSecret: process.env.NEXMO_SECRET
+}) : null;
+
 
 app.get('/', (req, res) => res.redirect('https://picsoung.typeform.com/to/Oo2bus'));
 
@@ -31,6 +42,7 @@ app.get('/:who', (req, res) => {
 
   const url = `https://res.cloudinary.com/dpope/image/${method}/${textTemplate}e_brightness_hsb:${brightness}/c_fit,e_distort:${distortion},w_700/g_north_west,e_screen,l_${base_image}/w_700/${slide_content}`;
   console.log(url);
+  if (nexmo) nexmo.message.sendSms('PAAS', process.env.NEXMO_SEND_TO, `New image generated: ${url}`);
   request({
     url: url,
   }).pipe(res);
