@@ -18,7 +18,7 @@ app.get('/', (req, res) => res.redirect('https://picsoung.typeform.com/to/Oo2bus
 
 app.get('/:who', (req, res) => {
   const slide = req.query['slide'] === '_____' ? '' : req.query['slide'];
-  const text = req.query['text'] === '_____' ? '' : req.query['text'];
+  const text = req.query['text'] === '_____' ? '' : encodeURIComponent(req.query['text']);
   const textColour = req.query['textColour'];
   const person = req.params.who.toLowerCase();
 
@@ -35,7 +35,7 @@ app.get('/:who', (req, res) => {
   const base_image = people[person].base_image;
 
   const textColourValue = textColour ? `,co_rgb:${textColour}` : '';
-  const textTemplate = text ? `w_800,h_600,c_fit,l_text:Arial_80:${text}${textColourValue}/` : '';
+  const textTemplate = text ? `w_1000,h_600,c_fit,l_text:Arial_120:${text}${textColourValue}/` : '';
 
   const method = slide ? 'fetch' : 'upload';
   const slide_content = slide || 'white.jpg';
